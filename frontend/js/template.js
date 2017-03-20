@@ -1,8 +1,15 @@
 /* global TrelloPowerUp */
+ var topWindow = window.top;
+
+console.log('Trelleth found a web3', topWindow);
+//debugger;
+// we cannot get top window web3 from metamask as we are in an iframe on a different domain.
+
+//var web3 = new Web3();
+
 
 var WHITE_ICON = './images/icon-white.svg';
 var GRAY_ICON = './images/icon-gray.svg';
-
 var parkMap = {
   acad: 'Acadia National Park',
   arch: 'Arches National Park',
@@ -20,62 +27,14 @@ var parkMap = {
 };
 
 var getBadges = function(t){
-  return t.card('name')
-  .get('name')
-  .then(function(cardName){
-    var badgeColor;
-    var icon = GRAY_ICON;
-    var lowercaseName = cardName.toLowerCase();
-    if(lowercaseName.indexOf('green') > -1){
-      badgeColor = 'green';
-      icon = WHITE_ICON;
-    } else if(lowercaseName.indexOf('yellow') > -1){
-      badgeColor = 'yellow';
-      icon = WHITE_ICON;
-    } else if(lowercaseName.indexOf('red') > -1){
-      badgeColor = 'red';
-      icon = WHITE_ICON;
+  return {
+    dynamic: function(){
+      return {
+        title: 'Funding', // for detail badges only
+        text: 'Ether: ' + (Math.random() * 100).toFixed(0).toString(),
+        refresh: 10
+      }
     }
-
-    if(lowercaseName.indexOf('dynamic') > -1){
-      // dynamic badges can have their function rerun after a set number
-      // of seconds defined by refresh. Minimum of 10 seconds.
-      return [{
-        dynamic: function(){
-          return {
-            title: 'Detail Badge', // for detail badges only
-            text: 'Dynamic ' + (Math.random() * 100).toFixed(0).toString(),
-            icon: icon, // for card front badges only
-            color: badgeColor,
-            refresh: 10
-          }
-        }
-      }]
-    }
-
-    if(lowercaseName.indexOf('static') > -1){
-      // return an array of badge objects
-      return [{
-        title: 'Detail Badge', // for detail badges only
-        text: 'Static',
-        icon: icon, // for card front badges only
-        color: badgeColor
-      }];
-    } else {
-      return [];
-    }
-  })
-};
-
-var formatNPSUrl = function(t, url){
-  if(!/^https?:\/\/www\.nps\.gov\/[a-z]{4}\//.test(url)){
-    return null;
-  }
-  var parkShort = /^https?:\/\/www\.nps\.gov\/([a-z]{4})\//.exec(url)[1];
-  if(parkShort && parkMap[parkShort]){
-    return parkMap[parkShort];
-  } else{
-    return null;
   }
 };
 

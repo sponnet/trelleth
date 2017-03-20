@@ -6,10 +6,15 @@ var t = TrelloPowerUp.iframe();
 var num = t.arg('rand');
 
 t.render(function(){
+  console.log('web3', window.web3.isConnected());
   // this function we be called once on initial load
   // and then called each time something changes that
   // you might want to react to, such as new data being
   // stored with t.set()
+});
+
+document.getElementById('icobtn').addEventListener('click', function(){
+  console.log('icobtn clickced', t.iframe.web3.currentProvider());
 });
 
 // close overlay if user clicks outside our content
