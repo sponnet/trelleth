@@ -6,6 +6,11 @@ var t = TrelloPowerUp.iframe();
 var arg = t.arg('arg');
 
 t.render(function(){
+  var btn = document.getElementById('fundbtn');
+  btn.addEventListener('click', function(){
+    var amount = document.getElementById('ethvalue').value;
+    console.log('send tx of ', amount);
+  });
   // make sure your rendering logic lives here, since we will
   // recall this method as the user adds and removes attachments
   // from your section

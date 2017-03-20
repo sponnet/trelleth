@@ -1,12 +1,12 @@
 /* global TrelloPowerUp */
  var topWindow = window.top;
 
-console.log('Trelleth found a web3', topWindow);
 //debugger;
 // we cannot get top window web3 from metamask as we are in an iframe on a different domain.
 
 //var web3 = new Web3();
-
+var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+console.log('web3? ', web3.isConnected);
 
 var WHITE_ICON = './images/icon-white.svg';
 var GRAY_ICON = './images/icon-gray.svg';
@@ -31,7 +31,7 @@ var getBadges = function(t){
     dynamic: function(){
       return {
         title: 'Funding', // for detail badges only
-        text: 'Ether: ' + (Math.random() * 100).toFixed(0).toString(),
+        text: 'Ξ ' + (Math.random() * 100).toFixed(0).toString(),
         refresh: 10
       }
     }
@@ -89,50 +89,42 @@ TrelloPowerUp.initialize({
     // include in your section.
 
     // we will just claim urls for Yellowstone
-    var claimed = options.entries.filter(function(attachment){
-      return attachment.url.indexOf('http://www.nps.gov/yell/') == 0;
-    });
 
     // you can have more than one attachment section on a card
     // you can group items together into one section, have a section
     // per attachment, or anything in between.
-    if(claimed && claimed.length > 0){
       // if the title for your section requires a network call or other
       // potentially length operation you can provide a function for the title
       // that returns the section title. If you do so, provide a unique id for
       // your section
       return [{
         id: 'Yellowstone', // optional if you aren't using a function for the title
-        claimed: claimed,
+        claimed: 'claimed',
         icon: GRAY_ICON,
-        title: 'Example Attachment Section: Yellowstone',
+        title: 'Fund this card',
         content: {
           type: 'iframe',
           url: t.signUrl('./section.html', { arg: 'you can pass your section args here' }),
           height: 230
         }
       }];
-    } else {
-      return [];
-    }
-  },
+    },
+
+
   'attachment-thumbnail': function(t, options){
-    var parkName = formatNPSUrl(t, options.url);
-    if(parkName){
-      // return an object with some or all of these properties:
+      var pubkey = "0x000"
+      // return an object with some  or all of these properties:
       // url, title, image, openText, modified (Date), created (Date), createdBy, modifiedBy
       return {
-        url: options.url,
-        title: parkName,
+        url: 'https://testnet.etherscan.io/address/'+pubkey,
+        title: pubkey,
         image: {
-          url: './images/nps.svg',
+          url: 'https://chart.googleapis.com/chart?cht=qr&chl='+pubkey+'&chs=256x256&choe=UTF-8&chld=L|2',
           logo: true // false if you are using a thumbnail of the content
         },
-        openText: 'Open in NPS'
+        openText: 'Check it on Etherscan'
       };
-    } else {
-      throw t.NotHandled();
-    }
+
   },
   'board-buttons': function(t, options){
     return [{
