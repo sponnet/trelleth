@@ -8,6 +8,10 @@
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 console.log('web3? ', web3.isConnected);
 
+window.addEventListener("send", function(e) {
+  console.log(e.detail); // Prints "Example of an event"
+});
+
 var WHITE_ICON = './images/icon-white.svg';
 var GRAY_ICON = './images/icon-gray.svg';
 var parkMap = {

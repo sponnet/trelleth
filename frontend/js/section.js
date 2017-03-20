@@ -10,6 +10,8 @@ t.render(function(){
   btn.addEventListener('click', function(){
     var amount = document.getElementById('ethvalue').value;
     console.log('send tx of ', amount);
+    var event = new CustomEvent("send", { "detail": amount });
+    window.dispatchEvent(event);
   });
   // make sure your rendering logic lives here, since we will
   // recall this method as the user adds and removes attachments
