@@ -5,12 +5,6 @@
 // we cannot get top window web3 from metamask as we are in an iframe on a different domain.
 
 //var web3 = new Web3();
-var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-console.log('web3? ', web3.isConnected);
-
-window.addEventListener("send", function(e) {
-  console.log(e.detail); // Prints "Example of an event"
-});
 
 var WHITE_ICON = './images/icon-white.svg';
 var GRAY_ICON = './images/icon-gray.svg';

@@ -5,13 +5,13 @@ var t = TrelloPowerUp.iframe();
 // you can access arguments passed to your iframe like so
 var arg = t.arg('arg');
 
+var web3 = document.web3;
+
 t.render(function(){
   var btn = document.getElementById('fundbtn');
   btn.addEventListener('click', function(){
     var amount = document.getElementById('ethvalue').value;
-    console.log('send tx of ', amount);
-    var event = new CustomEvent("send", { "detail": amount });
-    window.dispatchEvent(event);
+    console.log('send tx of ', amount, web3);
   });
   // make sure your rendering logic lives here, since we will
   // recall this method as the user adds and removes attachments
